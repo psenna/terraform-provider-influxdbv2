@@ -82,6 +82,7 @@ func (p *InfluxdbV2Provider) Configure(ctx context.Context, req provider.Configu
 
 func (p *InfluxdbV2Provider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
+		BucketResource,
 		OrganizationResource,
 	}
 }

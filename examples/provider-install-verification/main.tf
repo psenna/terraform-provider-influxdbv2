@@ -16,6 +16,16 @@ data "influxdbv2_organization" "old_organization" {
 }
 
 resource "influxdbv2_organization" "new_organization" {
-  name = "neworg123"
+  name = "neworg"
   description = "New created org"
+}
+
+resource "influxdbv2_bucket" "new_bucket" {
+  name = "new_bucket"
+  org_id = influxdbv2_organization.new_organization.id
+  rp = "0"
+  retention_rules = [{
+    every_seconds = 2592000,
+    retention_type = "expire"
+  }]
 }
