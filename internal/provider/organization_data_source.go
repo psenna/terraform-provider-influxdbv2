@@ -91,7 +91,6 @@ func (d *organizationDataSource) Configure(ctx context.Context, req datasource.C
 	}
 
 	d.client = client
-
 }
 
 func (d *organizationDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
@@ -108,8 +107,8 @@ func (d *organizationDataSource) Read(ctx context.Context, req datasource.ReadRe
 
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error on request",
-			fmt.Sprintf("Error: %s", err),
+			"Error reading organization",
+			fmt.Sprintf("Could not read organization %s : %s", state.Name, err),
 		)
 
 		return
@@ -119,7 +118,7 @@ func (d *organizationDataSource) Read(ctx context.Context, req datasource.ReadRe
 
 	state.Description = types.StringPointerValue(organization.Description)
 
-	state.Description = types.StringPointerValue((*string)(organization.Status))
+	state.Status = types.StringPointerValue((*string)(organization.Status))
 
 	state.CreatedAt = types.StringValue(organization.CreatedAt.String())
 
@@ -127,7 +126,4 @@ func (d *organizationDataSource) Read(ctx context.Context, req datasource.ReadRe
 
 	diags := resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
 }

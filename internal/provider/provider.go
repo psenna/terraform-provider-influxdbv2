@@ -82,13 +82,12 @@ func (p *InfluxdbV2Provider) Configure(ctx context.Context, req provider.Configu
 
 func (p *InfluxdbV2Provider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewExampleResource,
+		OrganizationResource,
 	}
 }
 
 func (p *InfluxdbV2Provider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NewExampleDataSource,
 		OrganizationDataSource,
 	}
 }
